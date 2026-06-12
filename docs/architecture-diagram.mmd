@@ -1,0 +1,94 @@
+---
+title: Restaurant Management PWA — Architecture Diagram
+---
+graph TB
+    subgraph Users["Users (Browser / PWA)"]
+        G["👔 Gestionnaire\n(iOS/Android/Desktop)"]
+        S["👷 Staff\n(iOS/Android/Desktop)"]
+    end
+
+    subgraph PWA["PWA Layer"]
+        SW["Service Worker\n(offline cache)"]
+        Manifest["Web App Manifest\n(installable)"]
+    end
+
+    subgraph Vercel["Vercel (EU)"]
+        direction TB
+        subgraph NextJS["Next.js 14 App Router"]
+            MW["middleware.ts\n(Edge RBAC guard)\n/finances/* → gestionnaire only"]
+            subgraph AppRouter["App Router"]
+                AuthRoutes["(auth)/\nS1 — Login"]
+                GestRoutes["(gestionnaire)/\nS2a Dashboard KPIs\nS3 P&L · S4 Margin\nCash Flow · Break-even\nS7 Planning · S8 RBAC · S9 Users"]
+                StaffRoutes["(staff)/\nS2b Operational Dashboard\nS5 HACCP · S6 Checklist\nS10 Hours Submission"]
+            end
+            subgraph APIRoutes["API Routes (serverless)"]
+                AuthAPI["POST /api/auth/[...nextauth]\nNextAuth.js v5 JWT"]
+                FinAPI["GET/POST /api/financial/*\n(gestionnaire only — double-guarded)"]
+                OpsAPI["GET/POST /api/haccp\n/api/checklist\n/api/staff/hours\n/api/staff/planning"]
+                AlertAPI["POST /api/alerts/trigger\nGET/PUT /api/alerts/config\nGET /api/alerts/log"]
+                UserAPI["GET/POST/PATCH /api/users\nPATCH /api/users/me/locale"]
+            end
+        end
+        Cron["Vercel Cron Jobs\nDaily CA: 06:00 CET\nWeekly MB%: Mon 08:00 CET"]
+    end
+
+    subgraph Neon["Neon PostgreSQL (EU Central)"]
+        DB[("PostgreSQL\nEU Region\n─────────\nusers\nfinancial_records\nhaccp_logs\nchecklist_entries\nstaff_hours\nalerts_config\nalerts_log")]
+    end
+
+    subgraph Brevo["Brevo (Meta BSP)"]
+        WA["WhatsApp Business API\nTemplates:\nA1_FR · A1_EN (daily CA)\nA2_FR · A2_EN (weekly MB%)"]
+        Email["Email Transactional\n(same templates)"]
+    end
+
+    subgraph i18n["next-intl"]
+        FR["messages/fr.json\n(default)"]
+        EN["messages/en.json"]
+    end
+
+    subgraph CI["CI/CD Pipeline"]
+        GH["GitHub Actions\n(lint · test · type-check)"]
+        VercelCI["Vercel\n(preview on PR · prod on main)"]
+    end
+
+    G -->|HTTPS| MW
+    S -->|HTTPS| MW
+    G --- SW
+    S --- SW
+    SW --- Manifest
+
+    MW --> AuthRoutes
+    MW -->|role=gestionnaire| GestRoutes
+    MW -->|role=staff| StaffRoutes
+    MW -->|403 if staff| FinAPI
+
+    AuthRoutes --> AuthAPI
+    GestRoutes --> FinAPI
+    GestRoutes --> UserAPI
+    StaffRoutes --> OpsAPI
+
+    AuthAPI -->|JWT + role + locale| DB
+    FinAPI --> DB
+    OpsAPI --> DB
+    AlertAPI --> DB
+    UserAPI --> DB
+
+    Cron -->|POST| AlertAPI
+    AlertAPI --> WA
+    AlertAPI --> Email
+
+    AppRouter --> FR
+    AppRouter --> EN
+
+    GH -->|push| VercelCI
+
+    classDef vercel fill:#000,color:#fff,stroke:#333
+    classDef neon fill:#00e599,color:#000,stroke:#00b377
+    classDef brevo fill:#0B96CC,color:#fff,stroke:#0875a0
+    classDef user fill:#6366f1,color:#fff,stroke:#4f46e5
+    classDef guard fill:#ef4444,color:#fff,stroke:#dc2626
+    class Vercel vercel
+    class Neon neon
+    class Brevo brevo
+    class G,S user
+    class MW guard
