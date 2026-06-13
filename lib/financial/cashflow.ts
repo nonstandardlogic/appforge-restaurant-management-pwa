@@ -29,7 +29,7 @@ export async function fetchWeeklyCashFlow(weekStart: Date): Promise<WeeklyView> 
   const startStr = weekStart.toISOString().slice(0, 10);
   const endStr = weekEnd.toISOString().slice(0, 10);
 
-  const rows = await sql`
+  const rows = (await sql`
     SELECT
       created_at::date AS entry_date,
       SUM(CASE WHEN amount > 0 THEN amount ELSE 0 END) AS inflows,
@@ -39,7 +39,7 @@ export async function fetchWeeklyCashFlow(weekStart: Date): Promise<WeeklyView> 
       AND created_at::date BETWEEN ${startStr} AND ${endStr}
     GROUP BY entry_date
     ORDER BY entry_date ASC
-  `;
+  `) as Array<Record<string, any>>;
 
   const dayMap = new Map<string, DaySummary>();
   const cursor = new Date(weekStart);
@@ -75,7 +75,7 @@ export async function fetchMonthlyCashFlow(month: number, year: number): Promise
     sql`SELECT COALESCE(SUM(amount), 0) AS total FROM financial_records
         WHERE type = 'cashflow' AND category = 'tva_ca3'
           AND period_month = ${month} AND period_year = ${year}`,
-  ]);
+  ]) as [Array<Record<string, any>>, Array<Record<string, any>>];
 
   const operatingTotal = Number(Number(opRows[0]?.total ?? 0).toFixed(2));
   const tvaCA3Total = Number(Number(tvaRows[0]?.total ?? 0).toFixed(2));

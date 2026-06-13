@@ -10,7 +10,7 @@ export interface KpiData {
 export async function fetchKpisForMonth(month: number, year: number): Promise<KpiData> {
   const sql = getDb();
 
-  const [revenueRows, cashflowRows, expenseRows, alertRows] = await Promise.all([
+  const [revenueRows, cashflowRows, expenseRows, alertRows] = (await Promise.all([
     sql`SELECT SUM(amount) AS total FROM financial_records
         WHERE type = 'revenue' AND period_month = ${month} AND period_year = ${year}`,
     sql`SELECT SUM(amount) AS total FROM financial_records
@@ -19,7 +19,7 @@ export async function fetchKpisForMonth(month: number, year: number): Promise<Kp
         WHERE type = 'expense' AND period_month = ${month} AND period_year = ${year}`,
     sql`SELECT threshold FROM alerts_config
         WHERE alert_type = 'daily_ca' AND enabled = true LIMIT 1`,
-  ]);
+  ])) as [Array<Record<string, any>>, Array<Record<string, any>>, Array<Record<string, any>>, Array<Record<string, any>>];
 
   const caRaw = revenueRows[0]?.total ?? null;
   const cashflowRaw = cashflowRows[0]?.total ?? null;

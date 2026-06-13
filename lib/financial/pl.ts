@@ -21,7 +21,7 @@ export interface MonthlyPL {
 export async function fetchMonthlyPL(month: number, year: number): Promise<MonthlyPL> {
   const sql = getDb();
 
-  const rows = await sql`
+  const rows = (await sql`
     SELECT type, category, tva_rate, SUM(amount) AS total
     FROM financial_records
     WHERE type IN ('revenue', 'expense')
@@ -29,7 +29,7 @@ export async function fetchMonthlyPL(month: number, year: number): Promise<Month
       AND period_year = ${year}
     GROUP BY type, category, tva_rate
     ORDER BY type DESC, category ASC
-  `;
+  `) as Array<Record<string, any>>;
 
   const revenues: PlLineItem[] = [];
   const charges: PlLineItem[] = [];
