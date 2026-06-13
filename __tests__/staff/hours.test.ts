@@ -60,8 +60,10 @@ describe('submitWeekHours', () => {
 
     // DELETE call
     mockSql.mockResolvedValueOnce([]);
-    // INSERT calls (one per day)
-    mockSql.mockResolvedValue([]);
+    // INSERT calls — one per day, explicitly queued
+    for (let i = 0; i < days.length; i++) {
+      mockSql.mockResolvedValueOnce([]);
+    }
     // fetchWeekHours SELECT at the end
     const finalRows = days.map((d, i) => ({
       id: `h${i}`,
@@ -69,8 +71,8 @@ describe('submitWeekHours', () => {
       week_start: '2026-06-09',
       day_of_week: d.day_of_week,
       availability: d.availability,
-      time_slot_start: 'time_slot_start' in d ? d.time_slot_start ?? null : null,
-      time_slot_end: 'time_slot_end' in d ? d.time_slot_end ?? null : null,
+      time_slot_start: 'time_slot_start' in d ? (d as any).time_slot_start ?? null : null,
+      time_slot_end: 'time_slot_end' in d ? (d as any).time_slot_end ?? null : null,
       validated: false,
     }));
     mockSql.mockResolvedValueOnce(finalRows);
