@@ -1,0 +1,15 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "pnpm build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "crons": [
+    {
+      "path": "/api/alerts/trigger",
+      "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/alerts/trigger",
+      "schedule": "0 7 * * 1"
+    }
+  ]
+}
