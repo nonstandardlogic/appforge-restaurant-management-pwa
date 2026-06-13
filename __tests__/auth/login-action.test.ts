@@ -1,13 +1,5 @@
 jest.mock('@/lib/auth', () => ({ signIn: jest.fn() }));
 jest.mock('next/navigation', () => ({ redirect: jest.fn() }));
-jest.mock('next-auth', () => ({
-  AuthError: class AuthError extends Error {
-    constructor(msg?: string) {
-      super(msg ?? 'AuthError');
-      this.name = 'AuthError';
-    }
-  },
-}));
 
 import { signIn } from '@/lib/auth';
 import { redirect } from 'next/navigation';
@@ -15,6 +7,12 @@ import { loginAction } from '@/app/login/actions';
 
 const mockSignIn = signIn as jest.Mock;
 const mockRedirect = redirect as jest.Mock;
+
+function makeAuthError(message = 'CredentialsSignin'): Error {
+  const err = new Error(message);
+  err.name = 'AuthError';
+  return err;
+}
 
 describe('NSLRMP-8 — Login server action (S1)', () => {
   afterEach(() => {
@@ -38,9 +36,7 @@ describe('NSLRMP-8 — Login server action (S1)', () => {
   });
 
   it('redirects to /login?error=invalid_credentials on AuthError', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { AuthError } = require('next-auth');
-    mockSignIn.mockRejectedValueOnce(new AuthError('CredentialsSignin'));
+    mockSignIn.mockRejectedValueOnce(makeAuthError());
 
     const formData = new FormData();
     formData.append('email', 'wrong@test.fr');
@@ -52,9 +48,7 @@ describe('NSLRMP-8 — Login server action (S1)', () => {
   });
 
   it('does not reveal which field caused the auth failure', async () => {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { AuthError } = require('next-auth');
-    mockSignIn.mockRejectedValueOnce(new AuthError('CredentialsSignin'));
+    mockSignIn.mockRejectedValueOnce(makeAuthError());
 
     const formData = new FormData();
     formData.append('email', 'anyone@test.fr');

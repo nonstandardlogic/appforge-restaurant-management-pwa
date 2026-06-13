@@ -9,21 +9,28 @@ jest.mock('bcryptjs', () => ({
   compare: jest.fn().mockResolvedValue(true),
 }));
 jest.mock('@/lib/auth/tokens', () => ({
-  generateResetToken: jest.fn(() => ({
-    token: 'test-reset-token-abc123',
-    expiresAt: new Date('2026-06-14T00:00:00Z'),
-  })),
+  generateResetToken: jest.fn(),
   isTokenExpired: jest.fn(() => false),
 }));
 
 import { requireGestionnaire } from '@/lib/auth/guard';
 import { neon } from '@neondatabase/serverless';
+import { generateResetToken } from '@/lib/auth/tokens';
 import { GET, POST } from '@/app/api/admin/users/route';
 import { PUT } from '@/app/api/admin/users/[id]/route';
 import { POST as RESET_POST } from '@/app/api/admin/users/[id]/reset-password/route';
 
 const mockRequireGestionnaire = requireGestionnaire as jest.Mock;
 const mockNeon = neon as jest.Mock;
+const mockGenerateResetToken = generateResetToken as jest.Mock;
+
+// Re-apply generateResetToken implementation after each jest.resetAllMocks() call
+beforeEach(() => {
+  mockGenerateResetToken.mockReturnValue({
+    token: 'test-reset-token-abc123',
+    expiresAt: new Date('2026-06-14T00:00:00Z'),
+  });
+});
 
 describe('NSLRMP-11 — User account management API (S9)', () => {
   afterEach(() => {

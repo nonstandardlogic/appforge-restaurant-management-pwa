@@ -1,7 +1,6 @@
 'use server';
 
 import { signIn } from '@/lib/auth';
-import { AuthError } from 'next-auth';
 import { redirect } from 'next/navigation';
 
 export async function loginAction(formData: FormData): Promise<void> {
@@ -12,7 +11,9 @@ export async function loginAction(formData: FormData): Promise<void> {
       redirectTo: '/dashboard',
     });
   } catch (error) {
-    if (error instanceof AuthError) {
+    // AuthError instances from next-auth have name === 'AuthError'.
+    // Checking by name avoids instanceof identity mismatch across module boundaries.
+    if (error instanceof Error && error.name === 'AuthError') {
       redirect('/login?error=invalid_credentials');
     }
     throw error;
