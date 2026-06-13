@@ -15,11 +15,12 @@ describe('NSLRMP-26 — Vercel deployment pipeline', () => {
       expect(vercelConfig.installCommand).toContain('--frozen-lockfile');
     });
 
-    it('configures cron jobs that POST to /api/alerts/trigger', () => {
+    it('configures cron jobs that POST to /api/alerts/trigger/daily or /api/alerts/trigger/weekly', () => {
       expect(vercelConfig.crons).toBeDefined();
       expect(vercelConfig.crons.length).toBeGreaterThan(0);
+      const validPaths = ['/api/alerts/trigger/daily', '/api/alerts/trigger/weekly'];
       vercelConfig.crons.forEach((cron: { path: string; schedule: string }) => {
-        expect(cron.path).toBe('/api/alerts/trigger');
+        expect(validPaths).toContain(cron.path);
       });
     });
 

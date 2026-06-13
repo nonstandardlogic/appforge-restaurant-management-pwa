@@ -1,0 +1,134 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "back": "Back",
+    "error": "An error occurred. Please try again.",
+    "data_unavailable": "Data not available",
+    "app_name": "Le 8e Continent / Saveurs d'Ailleurs"
+  },
+  "login": {
+    "title": "Sign In",
+    "subtitle": "Restaurant Le 8e Continent / Saveurs d'Ailleurs",
+    "email_label": "Email",
+    "password_label": "Password",
+    "submit": "Sign In",
+    "error_invalid_credentials": "Invalid credentials. Please check your email and password.",
+    "error_generic": "An error occurred. Please try again."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "all_clear": "Everything is in order ✓",
+    "non_compliant": "{count} non-compliant temperature(s) today — corrective action required",
+    "opening_checklist": "Opening Checklist",
+    "next_haccp": "Next HACCP Check",
+    "location_label": "Location",
+    "last_checked": "Last checked: {date}",
+    "not_checked_today": "Not checked today",
+    "nav_haccp": "HACCP Temperatures",
+    "nav_checklist": "Opening Checklist",
+    "nav_hours": "My Hours",
+    "nav_planning": "Team Schedule"
+  },
+  "checklist": {
+    "title": "Opening Checklist",
+    "complete": "Opening checklist complete ✓",
+    "progress": "{done}/{total} tasks completed",
+    "mark_done": "Mark as done",
+    "task_done": "Task completed",
+    "tasks": {
+      "open_doors": "Open the doors",
+      "check_temperatures": "Check temperatures",
+      "prepare_sauces": "Prepare sauces",
+      "setup_tables": "Set up tables",
+      "check_stock": "Check stock",
+      "clean_kitchen": "Clean the kitchen",
+      "check_hygiene": "Hygiene check"
+    }
+  },
+  "haccp": {
+    "title": "HACCP Controls",
+    "add_reading": "Add a temperature reading",
+    "location_label": "Location",
+    "temperature_label": "Temperature (°C)",
+    "status_compliant": "Compliant",
+    "status_non_compliant": "Non-compliant",
+    "corrective_action_label": "Corrective action",
+    "submit": "Save",
+    "locations": {
+      "cold_room": "Cold room",
+      "prep_area": "Preparation area",
+      "dishwasher": "Dishwasher"
+    }
+  },
+  "hours": {
+    "title": "My Hours",
+    "week": "Week of {date}",
+    "total_hours": "Total: {hours}h",
+    "clock_in": "Clock in",
+    "clock_out": "Clock out",
+    "no_entries": "No entries this week"
+  },
+  "planning": {
+    "title": "Team Schedule",
+    "week": "Week of {date}",
+    "add_shift": "Add a shift",
+    "employee_label": "Employee",
+    "start_label": "Start",
+    "end_label": "End",
+    "no_shifts": "No shifts scheduled"
+  },
+  "finances": {
+    "title": "Financial Dashboard",
+    "month": "Month: {label}",
+    "kpis_aria_label": "Key financial indicators",
+    "ca": "Monthly revenue",
+    "tresorerie": "Cash flow",
+    "marge_brute": "Gross margin",
+    "alerte_seuil": "Revenue threshold alert",
+    "threshold_not_reached": "⚠ Threshold not reached",
+    "threshold_reached": "✓ Threshold reached",
+    "nav_pl": "Income statement",
+    "nav_margin": "Gross margin",
+    "nav_break_even": "Break-even point",
+    "nav_cashflow": "Cash flow"
+  },
+  "finances_pl": { "title": "Income Statement" },
+  "finances_margin": { "title": "Gross Margin" },
+  "finances_break_even": { "title": "Break-Even Point" },
+  "finances_cashflow": { "title": "Cash Flow" },
+  "alerts": {
+    "title": "Alert Configuration",
+    "daily_ca_label": "Daily revenue alert",
+    "weekly_mb_label": "Weekly gross margin alert",
+    "enabled_label": "Enabled",
+    "threshold_label": "Threshold",
+    "locale_label": "Language",
+    "email_label": "Recipient email",
+    "phone_label": "Recipient phone (WhatsApp)",
+    "save": "Save",
+    "saving": "Saving...",
+    "log_title": "Delivery log",
+    "log_empty": "No alerts sent"
+  },
+  "admin": {
+    "title": "Administration",
+    "users_section": "Users",
+    "add_user": "Add a user",
+    "email_label": "Email",
+    "role_label": "Role",
+    "role_gestionnaire": "Manager",
+    "role_staff": "Staff",
+    "password_label": "Password",
+    "create_user": "Create user",
+    "user_created": "User created successfully"
+  },
+  "language_toggle": {
+    "aria_label": "Language selection",
+    "fr_aria": "Passer en français",
+    "en_aria": "Switch to English"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "common": {
+    "loading": "Chargement…",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "back": "Retour",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "data_unavailable": "Données non disponibles",
+    "app_name": "Le 8e Continent / Saveurs d'Ailleurs"
+  },
+  "login": {
+    "title": "Connexion",
+    "subtitle": "Restaurant Le 8e Continent / Saveurs d'Ailleurs",
+    "email_label": "Email",
+    "password_label": "Mot de passe",
+    "submit": "Se connecter",
+    "error_invalid_credentials": "Identifiants incorrects. Vérifiez votre email et votre mot de passe.",
+    "error_generic": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "dashboard": {
+    "title": "Tableau de bord",
+    "all_clear": "Tout est en ordre ✓",
+    "non_compliant": "{count} température(s) non conforme(s) aujourd'hui — action corrective requise",
+    "opening_checklist": "Checklist d'ouverture",
+    "next_haccp": "Prochain contrôle HACCP",
+    "location_label": "Zone",
+    "last_checked": "Dernier contrôle : {date}",
+    "not_checked_today": "Non contrôlé aujourd'hui",
+    "nav_haccp": "Températures HACCP",
+    "nav_checklist": "Checklist ouverture",
+    "nav_hours": "Mes heures",
+    "nav_planning": "Planning équipe"
+  },
+  "checklist": {
+    "title": "Checklist d'ouverture",
+    "complete": "Checklist ouverture complète ✓",
+    "progress": "{done}/{total} tâches complétées",
+    "mark_done": "Marquer comme fait",
+    "task_done": "Tâche complétée",
+    "tasks": {
+      "open_doors": "Ouvrir les portes",
+      "check_temperatures": "Vérifier les températures",
+      "prepare_sauces": "Préparer les sauces",
+      "setup_tables": "Dresser les tables",
+      "check_stock": "Vérifier les stocks",
+      "clean_kitchen": "Nettoyer la cuisine",
+      "check_hygiene": "Contrôle hygiène"
+    }
+  },
+  "haccp": {
+    "title": "Contrôles HACCP",
+    "add_reading": "Ajouter une température",
+    "location_label": "Zone",
+    "temperature_label": "Température (°C)",
+    "status_compliant": "Conforme",
+    "status_non_compliant": "Non conforme",
+    "corrective_action_label": "Action corrective",
+    "submit": "Enregistrer",
+    "locations": {
+      "cold_room": "Chambre froide",
+      "prep_area": "Zone de préparation",
+      "dishwasher": "Lave-vaisselle"
+    }
+  },
+  "hours": {
+    "title": "Mes heures",
+    "week": "Semaine du {date}",
+    "total_hours": "Total : {hours}h",
+    "clock_in": "Pointer l'entrée",
+    "clock_out": "Pointer la sortie",
+    "no_entries": "Aucune entrée cette semaine"
+  },
+  "planning": {
+    "title": "Planning équipe",
+    "week": "Semaine du {date}",
+    "add_shift": "Ajouter un créneau",
+    "employee_label": "Employé",
+    "start_label": "Début",
+    "end_label": "Fin",
+    "no_shifts": "Aucun créneau planifié"
+  },
+  "finances": {
+    "title": "Tableau de bord — Finances",
+    "month": "Mois : {label}",
+    "kpis_aria_label": "Indicateurs financiers clés",
+    "ca": "Chiffre d'affaires du mois",
+    "tresorerie": "Trésorerie",
+    "marge_brute": "Marge brute",
+    "alerte_seuil": "Alerte seuil CA",
+    "threshold_not_reached": "⚠ Seuil non atteint",
+    "threshold_reached": "✓ Seuil atteint",
+    "nav_pl": "Compte de résultat",
+    "nav_margin": "Marge brute",
+    "nav_break_even": "Seuil de rentabilité",
+    "nav_cashflow": "Trésorerie"
+  },
+  "finances_pl": { "title": "Compte de résultat" },
+  "finances_margin": { "title": "Marge brute" },
+  "finances_break_even": { "title": "Seuil de rentabilité" },
+  "finances_cashflow": { "title": "Trésorerie" },
+  "alerts": {
+    "title": "Configuration des alertes",
+    "daily_ca_label": "Alerte CA journalier",
+    "weekly_mb_label": "Alerte Marge Brute hebdomadaire",
+    "enabled_label": "Activée",
+    "threshold_label": "Seuil",
+    "locale_label": "Langue",
+    "email_label": "Email destinataire",
+    "phone_label": "Téléphone WhatsApp",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
+    "log_title": "Journal de livraison",
+    "log_empty": "Aucune alerte envoyée"
+  },
+  "admin": {
+    "title": "Administration",
+    "users_section": "Utilisateurs",
+    "add_user": "Ajouter un utilisateur",
+    "email_label": "Email",
+    "role_label": "Rôle",
+    "role_gestionnaire": "Gestionnaire",
+    "role_staff": "Employé",
+    "password_label": "Mot de passe",
+    "create_user": "Créer l'utilisateur",
+    "user_created": "Utilisateur créé avec succès"
+  },
+  "language_toggle": {
+    "aria_label": "Sélection de la langue",
+    "fr_aria": "Passer en français",
+    "en_aria": "Switch to English"
+  }
+}
