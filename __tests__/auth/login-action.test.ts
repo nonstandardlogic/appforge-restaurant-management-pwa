@@ -15,6 +15,18 @@ function makeAuthError(message = 'CredentialsSignin'): Error {
 }
 
 describe('NSLRMP-8 — Login server action (S1)', () => {
+  beforeEach(() => {
+    // In the real Next.js runtime redirect() throws a NEXT_REDIRECT error.
+    // Mirror that here so loginAction exits via the redirect path instead of
+    // re-throwing the AuthError.  Re-applied in beforeEach because
+    // jest.resetAllMocks() (afterEach) strips implementations.
+    mockRedirect.mockImplementation((url: string) => {
+      const err = new Error(url);
+      err.name = 'NextRedirect';
+      throw err;
+    });
+  });
+
   afterEach(() => {
     jest.resetAllMocks();
   });
@@ -42,7 +54,11 @@ describe('NSLRMP-8 — Login server action (S1)', () => {
     formData.append('email', 'wrong@test.fr');
     formData.append('password', 'bad-password');
 
-    await loginAction(formData);
+    try {
+      await loginAction(formData);
+    } catch {
+      // redirect() throws in both real runtime and mock — expected
+    }
 
     expect(mockRedirect).toHaveBeenCalledWith('/login?error=invalid_credentials');
   });
@@ -54,7 +70,11 @@ describe('NSLRMP-8 — Login server action (S1)', () => {
     formData.append('email', 'anyone@test.fr');
     formData.append('password', 'anything');
 
-    await loginAction(formData);
+    try {
+      await loginAction(formData);
+    } catch {
+      // redirect() throws — expected
+    }
 
     const redirectArg: string = mockRedirect.mock.calls[0][0];
     expect(redirectArg).not.toContain('email');

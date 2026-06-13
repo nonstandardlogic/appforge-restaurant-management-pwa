@@ -11,9 +11,9 @@ export async function loginAction(formData: FormData): Promise<void> {
       redirectTo: '/dashboard',
     });
   } catch (error) {
-    // AuthError instances from next-auth have name === 'AuthError'.
-    // Checking by name avoids instanceof identity mismatch across module boundaries.
-    if (error instanceof Error && error.name === 'AuthError') {
+    // Avoid instanceof Error — Jest vm boundaries can cause identity mismatch.
+    // Check the name property directly; next-auth AuthErrors always set it.
+    if ((error as any)?.name === 'AuthError') {
       redirect('/login?error=invalid_credentials');
     }
     throw error;
