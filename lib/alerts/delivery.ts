@@ -27,9 +27,10 @@ export async function deliverWithRetry(opts: DeliverOptions): Promise<void> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     try {
       const messageId = await sendFn();
+      const sentStatus = 'sent';
       await (sql`
         INSERT INTO alerts_log (alert_type, channel, template_id, payload, status, message_id, sent_at)
-        VALUES (${alertType}, ${channel}, ${templateId}, ${payloadJson}, 'sent', ${messageId}, NOW())
+        VALUES (${alertType}, ${channel}, ${templateId}, ${payloadJson}, ${sentStatus}, ${messageId}, NOW())
       ` as unknown as Promise<void>);
       return;
     } catch (err) {
