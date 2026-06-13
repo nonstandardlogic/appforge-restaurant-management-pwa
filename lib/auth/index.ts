@@ -1,9 +1,11 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import { sql } from '@/lib/db/client';
+import { neon } from '@neondatabase/serverless';
 import { authConfig } from './config';
 
+// Use neon() directly so this module stays independent of lib/db/client's export shape.
+// neon() is stateless (HTTP driver) — creating an instance per invocation is fine.
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -15,6 +17,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
+        const sql = neon(process.env.DATABASE_URL!);
         const rows = await sql`
           SELECT id, email, password_hash, role, locale
           FROM users
