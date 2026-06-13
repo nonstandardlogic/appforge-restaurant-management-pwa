@@ -26,3 +26,15 @@ export async function requireRole(role: string): Promise<NextResponse | null> {
 export async function requireGestionnaire(): Promise<NextResponse | null> {
   return requireRole('gestionnaire');
 }
+
+export async function requireStaff(): Promise<NextResponse | null> {
+  return requireRole('staff');
+}
+
+export async function requireAuth(): Promise<NextResponse | null> {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  return null;
+}
